@@ -1,0 +1,43 @@
+package com.adp.automation.shoestore;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.*;
+
+public class HomePageDummy {
+	WebDriver driver;
+	@FindBy (id ="remind_email_input")
+	WebElement emailRegistration;
+	
+   @FindBy (id ="remind_email_submit")
+   WebElement emailSubmit;
+   
+   @FindBy (xpath =".//*[@id='flash']/div")
+   WebElement message;
+   
+ 
+   public HomePageDummy(WebDriver driver){
+	   this.driver = driver;
+	   PageFactory.initElements(driver, this);
+   }
+   
+  public void setRegistationEmail(CharSequence emailId)
+  {
+	  emailRegistration.sendKeys(emailId);
+	  
+  }
+  
+  public void submitEmailId(){
+      emailSubmit.click();
+}
+  public String getMessageafterSubmission()
+  {
+	 return message.getText();
+  }
+  public void clickonMonthLink(String monthLabel)
+  
+  {
+	driver.findElement(By.cssSelector(".nav.navbar-nav>li>a[text=monthLabel")).click();
+	  
+	   
+  }
+  
+}
