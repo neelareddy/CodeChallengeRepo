@@ -1,0 +1,73 @@
+package com.adp.automation.shoestore.tests;
+import java.util.concurrent.TimeUnit;
+
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+import com.adp.automation.shoestore.*;
+
+public class HomePageTest {
+	 WebDriver driver;
+	
+	@BeforeTest(alwaysRun=true)
+	public void setUp()
+	
+	{
+	
+	//	System.setProperty("webdriver.gecko.driver", "C:/Users/chinnapn/Downloads/selenium-server-standalone-2.53.1.jar");
+		
+		this.driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+		driver.navigate().to("https://rb-shoe-store.herokuapp.com/");
+		driver.manage().window().maximize();
+			}
+	
+	@Test 
+	@Parameters({"emailId"})
+	public void verifyEmailSubmissionPos(String emailId) throws Exception
+	{ 
+	 String message, rumtimeMessage;
+	  message = "Thanks! We will notify you of our new shoes at this email: "+emailId;
+	  HomePage hmpage = new HomePage(this.driver);
+		hmpage.setRegistationEmail(emailId);
+		hmpage.submitEmailId();
+	//	Thread.sleep(30000);
+		WebDriverWait wait = new WebDriverWait(driver,20);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='flash']/div")));
+		rumtimeMessage = hmpage.getMessageafterSubmission();
+		System.out.println("Message returned by system at runtime:"+ rumtimeMessage);
+		Assert.assertEquals(message, rumtimeMessage); 
+	}	
+		
+	@Test 
+	@Parameters({"emailId"})
+	public void verifyEmailSubmissionNeg(String emailId)
+	{ 
+	 String message, rumtimeMessage;
+	  message = "Please enter an email address";
+	  HomePage hmpage = new HomePage(this.driver);
+		hmpage.setRegistationEmail(emailId);
+		hmpage.submitEmailId();
+		rumtimeMessage = hmpage.getMessageafterSubmission();
+		System.out.println("Message returned by system at runtime:"+ rumtimeMessage);
+		Assert.assertEquals(message, rumtimeMessage); 
+	}
+	
+	@AfterSuite
+	public void closeDriver(){
+			driver.quit();
+		}
+	}

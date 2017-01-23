@@ -1,0 +1,88 @@
+package com.adp.automation.shoestore.tests;
+import java.util.concurrent.TimeUnit;
+
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.*;
+import org.testng.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+import com.adp.automation.shoestore.*;
+
+public class MonthwiseDetailsPageTest {
+	 WebDriver driver;
+	
+	@BeforeTest(alwaysRun=true)
+	public void setUp()
+	
+	{
+	
+	//	System.setProperty("webdriver.gecko.driver", "C:/Users/chinnapn/Downloads/selenium-server-standalone-2.53.1.jar");
+		
+		this.driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+		driver.navigate().to("https://rb-shoe-store.herokuapp.com/");
+		driver.manage().window().maximize();
+			}
+	
+	@Test
+	@Parameters({"monthSelection"})
+	public void verifyMonthLink(String monthSelection)
+	{String text,label;
+		HomePage hmpage = new HomePage(this.driver);
+		hmpage.clickonMonthLink(monthSelection);
+		MonthwiseDetailsPage mnthwise = new MonthwiseDetailsPage(this.driver);
+		text = mnthwise.monthShoesLabelPresence();
+		if (monthSelection.equalsIgnoreCase("All Shoes"))
+		label = monthSelection;
+		else
+		label = monthSelection+"'s Shoes";
+		Assert.assertEquals(label, text);
+		Assert.assertTrue(mnthwise.shoesListPresence());
+	}
+	
+	@Test(dependsOnMethods="verifyMonthLink")
+	
+	public void verifyBlurbPresence()
+	{
+		MonthwiseDetailsPage mnthwise = new MonthwiseDetailsPage(this.driver);
+		//HomePage hmpage = new HomePage(driver);
+		//hmpage.clickonMonthLink(monthSelection);
+		Assert.assertTrue(mnthwise.monthwiseShoeListBlurb());
+		
+	}
+	
+@Test(dependsOnMethods="verifyMonthLink")
+public void verifyImagePresence()	
+
+{
+	MonthwiseDetailsPage mnthwise = new MonthwiseDetailsPage(this.driver);
+//	HomePage hmpage = new HomePage(driver);
+//	hmpage.clickonMonthLink(monthSelection);
+	Assert.assertTrue(mnthwise.monthwiseShoeListImage());
+	
+}
+@Test(dependsOnMethods="verifyMonthLink")
+	
+public void verifyPricePresence()	
+
+{
+	MonthwiseDetailsPage mnthwise = new MonthwiseDetailsPage(this.driver);
+//	HomePage hmpage = new HomePage(driver);
+//	hmpage.clickonMonthLink(monthSelection);
+	Assert.assertTrue(mnthwise.monthwiseShoeListPrice());
+	
+}
+@AfterSuite
+public void closeDriver(){
+		driver.quit();
+	}
+}

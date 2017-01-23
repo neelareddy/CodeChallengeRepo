@@ -1,0 +1,45 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Shoe Store Tests" verbose="2">
+  
+      <test name="Email Submission Validation">
+        
+                         
+         <classes>
+            <class name="com.adp.automation.shoestore.tests.HomePageTest">
+                      <methods>
+            <include name="setUp"></include>
+            <include name="verifyEmailSubmissionPos">
+            <parameter name="emailId" value="chinnageetha@hotmail.com"/>
+            </include>
+            <include name="verifyEmailSubmissionNeg">
+            <parameter name="emailId" value=""/>
+            </include>
+            </methods> 
+                    </class>
+            
+        </classes>
+    </test>
+    
+     <test name="Shoelist Validation ">
+     <classes>
+     <class name="com.adp.automation.shoestore.tests.MonthwiseDetailsPageTest">
+             <methods>
+            <include name="setUp"></include>
+            <include name="verifyMonthLink">
+            <parameter name="monthSelection" value="January"/>
+            </include>
+            <include name="verifyBlurbPresence">
+                       </include>
+             <include name="verifyImagePresence">
+                        </include>
+            <include name="verifyPricePresence">
+                    </include>
+            </methods> 
+            </class>
+     
+     </classes>
+     </test>
+        
+   
+      
+</suite>

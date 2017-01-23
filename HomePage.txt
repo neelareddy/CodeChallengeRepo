@@ -1,0 +1,135 @@
+package com.adp.automation.shoestore;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.*;
+
+public class HomePage {
+	WebDriver driver;
+	@FindBy (id ="remind_email_input")
+	WebElement emailRegistration;
+	
+   @FindBy (id ="remind_email_submit")
+   WebElement emailSubmit;
+   
+   @FindBy (xpath =".//*[@id='flash']/div")
+   WebElement message;
+   
+   @FindBy (xpath =".//*[@id='header_nav']/nav/ul/li[1]/a")
+   WebElement janMonthLink;
+   
+   @FindBy (xpath =".//*[@id='header_nav']/nav/ul/li[2]/a")
+   WebElement febMonthLink;
+   
+   @FindBy (xpath =".//*[@id='header_nav']/nav/ul/li[3]/a")
+   WebElement marMonthLink;
+   
+   @FindBy (xpath =".//*[@id='header_nav']/nav/ul/li[4]/a")
+   WebElement aprMonthLink;
+   
+   @FindBy (xpath =".//*[@id='header_nav']/nav/ul/li[5]/a")
+   WebElement mayMonthLink;
+   
+   @FindBy (xpath =".//*[@id='header_nav']/nav/ul/li[6]/a")
+   WebElement junMonthLink;
+   
+   @FindBy (xpath =".//*[@id='header_nav']/nav/ul/li[7]/a")
+   WebElement julMonthLink;
+   
+   @FindBy (xpath =".//*[@id='header_nav']/nav/ul/li[8]/a")
+   WebElement augMonthLink;
+   
+   @FindBy (xpath =".//*[@id='header_nav']/nav/ul/li[9]/a")
+   WebElement septMonthLink;
+   
+   @FindBy (xpath =".//*[@id='header_nav']/nav/ul/li[10]/a")
+   WebElement octMonthLink;
+   
+   @FindBy (xpath =".//*[@id='header_nav']/nav/ul/li[11]/a")
+   WebElement novMonthLink;
+   
+   @FindBy (xpath =".//*[@id='header_nav']/nav/ul/li[12]/a")
+   WebElement decMonthLink;
+   
+   @FindBy (xpath =".//*[@id='header_nav']/nav/ul/li[13]/a")
+   WebElement allShoesLink;
+   
+   public HomePage(WebDriver driver){
+	   this.driver = driver;
+	   PageFactory.initElements(driver, this);
+   }
+   
+  public void setRegistationEmail(CharSequence emailId)
+  {
+	  emailRegistration.sendKeys(emailId);
+	  
+  }
+  
+  public void submitEmailId(){
+      emailSubmit.click();
+}
+  public String getMessageafterSubmission()
+  {
+	 return message.getText();
+  }
+  public void clickonMonthLink(String monthLabel)
+  {
+	  switch (monthLabel.toLowerCase())
+	  {
+		  case "january": 
+			  janMonthLink.click();
+			  break;
+			  
+		  case "february": 
+			  febMonthLink.click();
+			  break;
+		  
+		  case "march": 
+			  marMonthLink.click();
+			  break;
+		
+		  case "april": 
+			  aprMonthLink.click();
+			  break;
+			  
+		  case "may": 
+			  mayMonthLink.click();
+			  break;
+			  
+		  case "june": 
+			  junMonthLink.click();
+			  break;
+			  
+		  case "july": 
+			  julMonthLink.click();
+			  break;
+			  
+		  case "august": 
+			  augMonthLink.click();
+			  break;
+			  
+		  case "september": 
+			  septMonthLink.click();
+			  break;
+			  
+		  case "october": 
+			  octMonthLink.click();
+			  break;
+			  
+		  case "november": 
+			  novMonthLink.click();
+			  break;
+			  
+		  case "december": 
+			  decMonthLink.click();
+			  break;
+			 
+		  case "all shoes":
+			  allShoesLink.click();
+			  break;
+			  
+			  
+  }
+	 
+	 
+  }
+  
+}

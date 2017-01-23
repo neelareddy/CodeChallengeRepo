@@ -1,0 +1,192 @@
+package com.adp.automation.shoestore;
+import java.util.List;
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.*;
+
+public class MonthwiseDetailsPage extends Throwable {
+	WebDriver driver;
+	@FindBy (css =".title>h2")
+	WebElement monthShoesLabel;
+	
+		
+	@FindAll({@FindBy(css = "ul#shoe_list li")})
+	List<WebElement> shoesList;
+	
+   
+   public MonthwiseDetailsPage(WebDriver driver){
+	   this.driver = driver;
+	   PageFactory.initElements(driver, this);
+   }
+   
+   public String monthShoesLabelPresence() 
+   {
+	   return monthShoesLabel.getText(); 
+	   
+   }
+    public boolean shoesListPresence()
+    {
+    	if (shoesList.size()==0)
+    		return false;
+    	else
+    		return true;
+    }
+  public boolean monthwiseShoeListBlurb() throws RuntimeException
+   
+  {
+		 boolean  allItemsPresent = true;
+		  int shoeCount= shoesList.size();
+		  String text;
+		  
+		  
+		  if (shoeCount==0){
+			  System.out.println("No items listed on the page");
+			  allItemsPresent = false;
+			  return allItemsPresent;
+		  }
+		  else{
+			  int i=0; String id1=null;
+		
+		  
+			  while(i<shoeCount)
+			  {
+				   id1= shoesList.get(i).getAttribute("id");
+			  System.out.println("ID of list item:"+id1);
+		  {
+			try{
+				text = driver.findElement(By.xpath(".//*[@id='"+id1+"']/div/table/tbody/tr[1]/td[1]")).getText().toString();
+	              System.out.println("Text is:"+text);  
+				
+				if (text.compareToIgnoreCase("Brand") !=0)
+				{
+			            	  System.out.println("Brand not present in the list:"+i);
+			              allItemsPresent = false;
+			              return allItemsPresent;
+				}
+			              else {
+			            	  text = driver.findElement(By.xpath(".//*[@id='"+id1+"']/div/table/tbody/tr[2]/td[1]")).getText().toString();
+				              System.out.println("Text is:"+text);
+				              if (text.compareToIgnoreCase("Name") !=0)
+			            	  {
+				            	  System.out.println("Name not present in the list:"+i);
+				              allItemsPresent = false;
+				              return allItemsPresent;
+				              }
+			            	  else{
+			            		      		  
+			            			  text = driver.findElement(By.xpath(".//*[@id='"+id1+"']/div/table/tbody/tr[4]/td[1]")).getText().toString();
+			            			  System.out.println("Text is:"+text);
+			            			  if (text.compareToIgnoreCase("Description") !=0)
+			            			  {
+					            	  System.out.println("Description not present in the list:"+i);
+					              allItemsPresent = false;
+					              return allItemsPresent;
+					              }
+			            		  else 
+			            	  i++;
+			            	  }
+			              }
+			                    
+								  
+			}catch(RuntimeException e)
+			{
+				
+				System.out.println(e);
+				allItemsPresent = false;
+							}
+		  }
+			  }
+		   return allItemsPresent;
+	 }
+	 }
+	  
+public boolean monthwiseShoeListPrice() throws RuntimeException
+
+{
+	 boolean  allItemsPresent = true;
+	  int shoeCount= shoesList.size();
+	  
+	  
+	  if (shoeCount==0){
+		  System.out.println("No items listed on the page");
+		  allItemsPresent = false;
+		  return allItemsPresent;
+	  }
+	  else{
+		  int i=0; String id1=null;
+	
+	  
+		  while(i<shoeCount)
+		  {
+			   id1= shoesList.get(i).getAttribute("id");
+		  System.out.println("ID of list item:"+id1);
+	  {
+		try{
+			if (!(driver.findElement(By.xpath(".//*[@id='"+id1+"']/div/table/tbody/tr[3]/td[1]")).getText().equalsIgnoreCase("Price")))
+		             
+		              {
+		            	  System.out.println("Price not present in the list:"+i);
+		              allItemsPresent = false;
+		              return allItemsPresent;
+		              }
+		              else
+		            	  i++;
+		                    
+							  
+		}catch(RuntimeException e)
+		{
+			
+			System.out.println(e);
+			allItemsPresent = false;
+						}
+	  }
+		  }
+	   return allItemsPresent;
+  }
+  }
+
+public boolean monthwiseShoeListImage() throws RuntimeException
+
+{
+	 boolean  allItemsPresent = true;
+	  int shoeCount= shoesList.size();
+	  
+	  
+	  if (shoeCount==0){
+		  System.out.println("No items listed on the page");
+		  allItemsPresent = false;
+		  return allItemsPresent;
+	  }
+	  else{
+		  int i=0; String id1=null;
+	
+	  
+		  while(i<shoeCount)
+		  {
+			   id1= shoesList.get(i).getAttribute("id");
+		  System.out.println("ID of list item:"+id1);
+	  {
+		try{
+			if ((driver.findElement(By.xpath(".//*[@id='"+id1+"']/div/table/tbody/tr[6]/td/img")).getAttribute("src").isEmpty()))
+		             
+		              {
+		            	  System.out.println("Image not present in the list:"+i);
+		              allItemsPresent = false;
+		              return allItemsPresent;
+		              }
+		              else
+		            	  i++;
+		                    
+							  
+		}catch(RuntimeException e)
+		{
+			
+			System.out.println(e);
+			allItemsPresent = false;
+						}
+	  }
+		  }
+	   return allItemsPresent;
+ }
+ }
+}
